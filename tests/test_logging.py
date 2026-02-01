@@ -1,6 +1,8 @@
 """Tests for the logging behavior of the Greeter class."""
+
 import logging
 from greeter import Greeter
+
 
 def test_greeting_logs_info(caplog):
     """Test that greeting with a name logs at INFO level."""
@@ -15,6 +17,7 @@ def test_greeting_logs_info(caplog):
     # Assert it was logged at the correct level using records
     assert len(caplog.records) == 1
     assert caplog.records[0].levelname == "INFO"
+
 
 def test_default_greeting_logs_debug(caplog):
     """Test that default greeting logs at DEBUG level."""
