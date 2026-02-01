@@ -1,0 +1,55 @@
+name: Manual Release
+
+on:
+    workflow_dispatch:
+        inputs:
+            reason:
+                description: "Reason for manual release"
+                required: false
+                default: "Manual release trigger"
+
+jobs:
+    test:
+        name: Validate Green Build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Install uv
+              uses: astral-sh/setup-uv@v5
+              with:
+                  version: "latest"
+                  enable-cache: true
+
+            - name: Install dependencies
+              run: make setup
+
+            - name: Run linter
+              run: make lint
+
+            - name: Run tests
+              run: make test
+
+    release:
+        name: Perform Release
+        needs: test
+        runs-on: ubuntu-latest
+        concurrency: release
+        permissions:
+            id-token: write
+            contents: write
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Install uv
+              uses: astral-sh/setup-uv@v5
+              with:
+                  version: "latest"
+                  enable-cache: true
+
+            - name: Python Semantic Release
+              uses: python-semantic-release/python-semantic-release@master
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -25,7 +25,6 @@ jobs:
             - name: Check git hooks
               run: |
                   make install-hooks
-                  # We don't enforce hooks in CI validation, but ensuring they install is good practice
 
             - name: Run linter
               run: make lint
