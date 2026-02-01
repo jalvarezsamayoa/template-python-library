@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "greeter"
+version = "0.1.0"
+description = "A simple Hello World library"
+readme = "README.md"
+authors = [{ name = "Javier Alvarez Samayoa", email = "author@example.com" }]
+license = { text = "MIT" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+dependencies = []
+requires-python = ">=3.7"
+
+[project.urls]
+Repository = "https://github.com/jalvarezsamayoa/template-python-library"
+Issues = "https://github.com/jalvarezsamayoa/template-python-library/issues"
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+    "python-semantic-release",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.semantic_release]
+commit_parser = "conventional"
+version_variables = ["src/greeter/__init__.py:__version__"]
+version_toml = ["pyproject.toml:project.version"]
+major_on_zero = false
+build_command = "uv build"
+
+[tool.ruff]
+line-length = 88
+target-version = "py37"
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "B"]
+ignore = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"

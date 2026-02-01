@@ -1,0 +1,34 @@
+name: CI
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Install uv
+              uses: astral-sh/setup-uv@v5
+              with:
+                  version: "latest"
+                  enable-cache: true
+
+            - name: Install dependencies
+              run: |
+                  make setup
+
+            - name: Check git hooks
+              run: |
+                  make install-hooks
+                  # We don't enforce hooks in CI validation, but ensuring they install is good practice
+
+            - name: Run linter
+              run: make lint
+
+            - name: Run tests
+              run: make test
