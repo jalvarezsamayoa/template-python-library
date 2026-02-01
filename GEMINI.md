@@ -42,6 +42,18 @@ This project uses a `Makefile` to abstract common development tasks. `uv` is the
     - **Target:** Python 3.7.
 - **Typing:** Type hints are expected in function signatures (e.g., `def greet(self, name: Optional[str] = None) -> str:`).
 
+### TDD Workflow (Strict)
+
+This project mandates a strict Test-Driven Development (TDD) process for all AI agents and contributors:
+
+1. **RED**: Write a failing test first that describes the intended behavior.
+2. **GREEN**: Write the minimum code necessary to make the test pass.
+3. **REFACTOR**: Clean up the implementation. A refactor is only complete when:
+
+- Code quality checks (`make lint`) pass without any issues.
+- Code adheres to **SOLID** principles.
+- Tests still pass.
+
 ### Dependency Management
 
 - **Tool:** `uv` is used for all dependency operations.
