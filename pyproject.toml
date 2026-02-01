@@ -36,6 +36,20 @@ version_toml = ["pyproject.toml:project.version"]
 major_on_zero = false
 build_command = "uv build"
 
+[tool.semantic_release.changelog]
+mode = "update"
+insertion_flag = "<!-- version list -->"
+
+[tool.semantic_release.changelog.default_templates]
+changelog_file = "CHANGELOG.md"
+mask_initial_release = false
+
+
+[tool.semantic_release.publish]
+dist_glob_patterns = ["dist/*"]
+upload_to_vcs_release = true
+
+
 [tool.ruff]
 line-length = 88
 target-version = "py37"
