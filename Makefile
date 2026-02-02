@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help check-deps setup test lint lint-fix clean install-hooks release-dry-run release
+.PHONY: help check-deps setup test lint lint-fix clean install-hooks release-dry-run release build test-install
 
 help: ## Display this help screen
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
@@ -35,6 +35,17 @@ release-dry-run: ## Preview the next version and changelog
 
 release: ## Create a new release and update version
 	uv run semantic-release version
+
+build: ## Build the library (sdist and wheel)
+	uv build
+
+test-install: build ## Test the installation of the built wheel and uninstall it after
+	@echo "Testing installation..."
+	uv pip install dist/*.whl
+	uv run python -c "import greeter; print('Successfully imported greeter')"
+	@echo "Uninstalling..."
+	uv pip uninstall greeter
+	@echo "Installation test completed."
 
 clean: ## Remove build artifacts and caches
 	rm -rf build/
