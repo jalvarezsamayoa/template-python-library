@@ -87,6 +87,38 @@ print(greeter.greet("Alice"))
 # Output: Hello Alice
 ```
 
+## 📝 Logging
+
+The `greeter` library uses Python's standard `logging` module. By default, it is silent (using `logging.NullHandler`).
+
+### Simple Setup
+
+For quick debugging, you can use the built-in helper:
+
+```python
+import greeter
+import logging
+
+# Quickly enable debug logging for the library
+greeter.setup_logging(level=logging.DEBUG)
+
+g = greeter.Greeter()
+g.greet()  # This will now print debug logs to stderr
+```
+
+### Advanced Configuration
+
+If you want to integrate with your application's logging configuration, you can target the `greeter` logger:
+
+```python
+import logging
+
+# Configure the 'greeter' logger manually
+logger = logging.getLogger("greeter")
+logger.setLevel(logging.INFO)
+logger.addHandler(logging.FileHandler("app.log"))
+```
+
 ## 📂 Project Structure
 
 ```text
